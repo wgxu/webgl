@@ -1,82 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>webGL demo</title>
-    <script src="three.js"></script>
-    <style>
-        html,body {
-            height: 100%;
-        }
-        canvas {
+    <title>Three框架</title>
+    <script src="three.js" ></script>
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
             width: 100%;
-            height: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
         }
+
     </style>
 </head>
-<body></body>
+<body>
+</body>
 <script>
-    var renderer,
-        width,
-        height;
-    function initThree() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        renderer = new THREE.WebGLRenderer();
-        renderer.setSize(width, height);
-        document.body.appendChild(renderer.domElement);
-    }
 
-    var camera;
-    function initCamera() {
-        camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-        camera.position.x = 0;
-        camera.position.y = 0;
-        camera.position.z = 5;
-        camera.up.x = 0;
-        camera.up.y = 0;
-        camera.up.z = 1;
-        camera.lookAt({
-            x : 0,
-            y : 0,
-            z : 0
-        });
-    }
+    width = window.innerWidth;
+    height = window.innerHeight;
 
-    var scene;
-    function initScene() {
-        scene = new THREE.Scene();
-    }
 
-    var light;
-    function initLight() {
-        light = new THREE.DirectionalLight(0xFF0000, 1.0, 0);
-        light.position.set(100, 100, 200);
-        scene.add(light);
-    }
+    // 老三样 场景scene，相机camera，渲染器render
+    var scene=new THREE.Scene();
+    // 相机
+    var camera = new THREE.PerspectiveCamera(45,width / height, 1, 1000);
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 30;
 
-    var cube;
-    function initObject() {
+    camera.up.x = 0;
+    camera.up.y = 0;
+    camera.up.z = 1;
 
-        var geometry = new THREE.CubeGeometry(1,1,1);
-        var material = new THREE.MeshBasicMaterial( { color: 0x00ff00} );
 
-        cube = new THREE.Mesh( geometry, material );
-        scene.add(cube);
-    }
-    function render()
-    {
-        renderer.render(scene, camera);
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth,window.innerHeight);
 
-    }
-    function threeStart() {
-        initThree();
-        initCamera();
-        initScene();
-        initLight();
-        initObject();
-        render();
-    }
-    threeStart();
+    //显示在窗体
+    document.body.appendChild(renderer.domElement);
+
+
+    var material = new THREE.LineBasicMaterial({color:0x0000ff});
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(30,0,0));
+    geometry.vertices.push(new THREE.Vector3(0,30,0));
+    //线构造
+    var line=new THREE.Line(geometry,material);
+    // 加入到场景中
+    scene.add(line);
+    // 渲染
+    renderer.render(scene,camera);
+
 </script>
 </html>
